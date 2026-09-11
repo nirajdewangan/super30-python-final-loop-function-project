@@ -2,11 +2,14 @@
 # 2. BANKING APPLICATION
 # ============================================================
 
-def get_valid_float(prompt):
-    """Keep asking until the user enters a valid number."""
+def get_positive_float(prompt):
+    """Keep asking until the user enters a number greater than zero."""
     while True:
         try:
-            return float(input(prompt))
+            amount = float(input(prompt))
+            if amount > 0:
+                return amount
+            print("Amount must be greater than 0.")
         except ValueError:
             print("Invalid input. Please enter a valid number.")
             
@@ -16,12 +19,8 @@ def bank_check_balance(balance):
 
 
 def bank_deposit(balance, history):
-    """Deposit money and return updated balance."""
-    amount = get_valid_float("Enter deposit amount: ₹")
-
-    if amount <= 0:
-        print("Invalid deposit amount.")
-        return balance
+    """Deposit a positive amount and return updated balance."""
+    amount = get_positive_float("Enter deposit amount: ₹")
 
     balance += amount
     history.append(f"Deposited ₹{amount}")
@@ -31,13 +30,9 @@ def bank_deposit(balance, history):
 
 
 def bank_withdraw(balance, history):
-    """Withdraw money and return updated balance."""
-    amount = get_valid_float("Enter withdrawal amount: ₹")
-    
-    if amount <= 0:
-        print("Invalid withdrawal amount.")
-
-    elif amount > balance:
+    """Withdraw a positive amount when sufficient balance is available."""
+    amount = get_positive_float("Enter withdrawal amount: ₹")
+    if amount > balance:
         print("Insufficient balance.")
 
     else:
@@ -94,4 +89,5 @@ def banking_application():
         else:
             print("Invalid choice.")
 
-banking_application()
+if __name__ == "__main__":
+    banking_application()

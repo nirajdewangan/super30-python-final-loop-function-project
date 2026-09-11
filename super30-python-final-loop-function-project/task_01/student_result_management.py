@@ -2,21 +2,24 @@
 # 1. STUDENT RESULT MANAGEMENT SYSTEM
 # ============================================================
 
-def get_valid_float(prompt):
-    """Keep asking until the user enters a valid number."""
+def get_valid_mark(prompt):
+    """Keep asking until the user enters a numeric mark from 0 to 100."""
     while True:
         try:
-            return float(input(prompt))
+            mark = float(input(prompt))
+            if 0 <= mark <= 100:
+                return mark
+            print("Marks must be between 0 and 100.")
+            # return float(input(prompt))
         except ValueError:
             print("Invalid input. Please enter a valid number.")
             
 def accept_marks():
-    """Accept marks for five subjects and return them as a list."""
+    """Accept valid marks for five subjects and return them as a list."""
     marks = []
 
     for i in range(1, 6):
-        mark = get_valid_float(f"Enter marks for subject {i}: ")
-        marks.append(mark)
+        marks.append(get_valid_mark(f"Enter marks for subject {i} (0-100): "))
 
     return marks
 
@@ -48,8 +51,7 @@ def assign_grade(percentage):
         return "C"
     elif percentage >= 50:
         return "D"
-    else:
-        return "F"
+    return "F"
 
 
 def determine_result(marks):
@@ -76,5 +78,5 @@ def display_student_result():
     print("Percentage:", round(percentage, 2), "%")
     print("Grade:", grade)
     print("Result:", result)
-
-display_student_result()
+if __name__ == "__main__":
+    display_student_result()

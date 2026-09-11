@@ -1,24 +1,22 @@
 # ============================================================
 # 10. EXPENSE TRACKER
 # ============================================================
-def get_valid_float(prompt):
-    """Keep asking until the user enters a valid number."""
+def get_positive_float(prompt):
+    """Keep asking until the user enters a number greater than zero."""
     while True:
         try:
-            return float(input(prompt))
+            amount = float(input(prompt))
+            if amount > 0:
+                return amount
+            print("Expense amount must be greater than 0.")
         except ValueError:
             print("Invalid input. Please enter a valid number.")
 
 def add_expense(expenses):
-    """Add a new expense."""
-    name = input("Enter expense name: ")
-    amount = get_valid_float("Enter amount: ₹")
-
-    expenses.append({
-        "name": name,
-        "amount": amount
-    })
-
+    """Add a new expense with a validated positive amount."""
+    name = input("Enter expense name: ").strip()
+    amount = get_positive_float("Enter amount: ₹")
+    expenses.append({"name": name, "amount": amount})
     print("Expense added.")
 
 
@@ -85,12 +83,7 @@ def expense_tracker():
             if highest is None:
                 print("No expenses recorded.")
             else:
-                print(
-                    "Highest Expense:",
-                    highest["name"],
-                    "- ₹",
-                    highest["amount"]
-                )
+                print("Highest Expense:", highest["name"], "- ₹", highest["amount"])
 
         elif choice == "5":
             break
@@ -98,4 +91,5 @@ def expense_tracker():
         else:
             print("Invalid choice.")
 
-expense_tracker()
+if __name__ == "__main__":
+    expense_tracker()

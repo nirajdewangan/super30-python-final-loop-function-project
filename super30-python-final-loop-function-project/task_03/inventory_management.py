@@ -1,33 +1,34 @@
 # ============================================================
 # 3. INVENTORY MANAGEMENT
 # ============================================================
-def get_valid_float(prompt):
-    """Keep asking until the user enters a valid number."""
+def get_non_negative_float(prompt):
+    """Keep asking until the user enters a non-negative number."""
     while True:
         try:
-            return float(input(prompt))
+            value = float(input(prompt))
+            if value >= 0:
+                return value
+            print("Value cannot be negative.")
         except ValueError:
             print("Invalid input. Please enter a valid number.")
 
-def get_valid_int(prompt):
-    """Keep asking until the user enters a valid integer."""
+def get_non_negative_int(prompt):
+    """Keep asking until the user enters a non-negative integer."""
     while True:
         try:
-            return int(input(prompt))
+            value = int(input(prompt))
+            if value >= 0:
+                return value
+            print("Value cannot be negative.")
         except ValueError:
             print("Invalid input. Please enter a valid integer.")
 
 def add_inventory_product(products):
-    """Add a product to inventory."""
-    name = input("Enter product name: ")
-    price = get_valid_float("Enter price: ")
-    quantity = get_valid_int("Enter quantity: ")
-
-    products[name] = {
-        "price": price,
-        "quantity": quantity
-    }
-
+    """Add a product to inventory using validated price and quantity."""
+    name = input("Enter product name: ").strip()
+    price = get_non_negative_float("Enter price: ")
+    quantity = get_non_negative_int("Enter quantity: ")
+    products[name] = {"price": price, "quantity": quantity}
     print("Product added successfully.")
 
 
@@ -40,13 +41,7 @@ def display_inventory(products):
     print("\nInventory:")
 
     for name, details in products.items():
-        print(
-            name,
-            "- Price: ₹",
-            details["price"],
-            "- Quantity:",
-            details["quantity"]
-        )
+        print(name, "- Price: ₹", details["price"], "- Quantity:", details["quantity"])
 
 
 def search_inventory_product(products):
@@ -60,15 +55,14 @@ def search_inventory_product(products):
 
 
 def update_inventory_quantity(products):
-    """Update quantity of an existing product."""
+    """Update quantity of an existing product using validation."""
     name = input("Enter product name: ")
 
     if name not in products:
         print("Product not found.")
         return
 
-    quantity = get_valid_int("Enter new quantity: ")
-    products[name]["quantity"] = quantity
+    products[name]["quantity"] = get_non_negative_int("Enter new quantity: ")
 
     print("Quantity updated.")
 
@@ -111,10 +105,7 @@ def inventory_management():
             update_inventory_quantity(products)
 
         elif choice == "5":
-            print(
-                "Total Inventory Value: ₹",
-                calculate_inventory_value(products)
-            )
+            print("Total Inventory Value: ₹", calculate_inventory_value(products))
 
         elif choice == "6":
             break
@@ -122,4 +113,5 @@ def inventory_management():
         else:
             print("Invalid choice.")
 
-inventory_management()
+if __name__ == "__main__":
+    inventory_management()
