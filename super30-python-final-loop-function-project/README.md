@@ -617,7 +617,7 @@ https://github.com/nirajdewangan/super30-python-final-loop-function-project/tree
 Add the public or unlisted YouTube explanation link here after recording:
 
 ```text
-YouTube Explanation: <your-youtube-video-link>
+YouTube Explanation: https://youtu.be/nYxi2jzLyNs
 ```
 
 The technical explanation should demonstrate the problem statement, approach, important functions, loop logic, why `for` or `while` was selected, execution, test cases, errors/challenges faced, and learning outcomes.
